@@ -1,0 +1,66 @@
+/*
+ * Copyright 2016 Cuebiq Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.cuebiq.presto.scalar;
+
+import com.esri.core.geometry.OperatorContains;
+import com.esri.core.geometry.Point;
+import com.esri.core.geometry.Polygon;
+import com.facebook.presto.operator.Description;
+import com.facebook.presto.operator.scalar.ScalarFunction;
+import com.facebook.presto.operator.scalar.TypeParameter;
+import com.facebook.presto.spi.block.Block;
+import com.facebook.presto.spi.type.StandardTypes;
+import com.facebook.presto.spi.type.Type;
+import com.facebook.presto.type.SqlType;
+
+import javax.annotation.Nullable;
+
+/**
+ * as the description states,
+ * this function allows to check whether a point is inside or outside a polygon.
+ */
+@Description("returns true if point is in polygon")
+@ScalarFunction("poly_contains")
+public class PolyContains {
+
+    @TypeParameter(StandardTypes.DOUBLE)
+    @SqlType(StandardTypes.BOOLEAN)
+    @Nullable
+    public static Boolean contains(
+            @TypeParameter(StandardTypes.DOUBLE) Type elementType,
+            @SqlType("array(double)") Block arrayBlock,
+            @SqlType(StandardTypes.DOUBLE) double lng,
+            @SqlType(StandardTypes.DOUBLE) double lat)
+    {
+        double[] array= new double[arrayBlock.getPositionCount()] ;
+
+        for (int i = 0; i < arrayBlock.getPositionCount(); i++) {
+
+            if (arrayBlock.isNull(i)) {
+                continue;
+            }
+            array[i]=elementType.getDouble(arrayBlock, i);
+        }
+        Polygon poly = new Polygon();
+
+        poly.startPath(array[0], array[1]);
+        for (int i = 2; i < array.length; i += 2) {
+            poly.lineTo(array[i], array[i + 1]);
+        }
+        return OperatorContains.local().execute(poly, new Point(lng,lat), null, null);
+    }
+
+}
