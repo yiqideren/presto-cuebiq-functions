@@ -81,30 +81,8 @@
                 </executions>
             </plugin>
 
-            <plugin>
-                <groupId>com.bazaarvoice.maven.plugins</groupId>
-                <artifactId>s3-upload-maven-plugin</artifactId>
-                <version>1.4</version>
-                <configuration>
-                    <bucketName>cuebiq</bucketName>
-                    <source>target/${project.artifactId}-${project.version}.jar</source>
-                    <destination>bi/PrestoDB/configuration/plugin/cuebiq/hashing.jar</destination>
-                </configuration>
-
-                <executions>
-                    <execution>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>s3-upload</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
         </plugins>
     </build>
-
-
 
 
 </project>
