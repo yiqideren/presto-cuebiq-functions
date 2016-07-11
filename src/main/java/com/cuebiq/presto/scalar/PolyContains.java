@@ -46,6 +46,7 @@ public class PolyContains {
             @SqlType(StandardTypes.DOUBLE) double lat)
     {
         double[] array= new double[arrayBlock.getPositionCount()] ;
+        Polygon poly = new Polygon();
 
         for (int i = 0; i < arrayBlock.getPositionCount(); i++) {
 
@@ -53,8 +54,8 @@ public class PolyContains {
                 continue;
             }
             array[i]=elementType.getDouble(arrayBlock, i);
+
         }
-        Polygon poly = new Polygon();
 
         poly.startPath(array[0], array[1]);
         for (int i = 2; i < array.length; i += 2) {

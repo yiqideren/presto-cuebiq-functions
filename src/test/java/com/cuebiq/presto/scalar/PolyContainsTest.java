@@ -15,16 +15,28 @@
  */
 package com.cuebiq.presto.scalar;
 
+import com.facebook.presto.metadata.FunctionListBuilder;
 import com.facebook.presto.spi.block.Block;
 import com.facebook.presto.spi.block.BlockBuilderStatus;
 import com.facebook.presto.spi.block.FixedWidthBlockBuilder;
 import com.facebook.presto.spi.type.DoubleType;
+import com.facebook.presto.type.TypeRegistry;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class PolyContainsTest {
+    @Test
+    public void testFunctionCreation()
+    {
+
+        TypeRegistry typeRegistry = new TypeRegistry();
+        FunctionListBuilder builder = new FunctionListBuilder(typeRegistry);
+
+        builder.scalar(PolyContains.class);
+    }
+
     @Test
     public void testPoly_contains() throws Exception {
 

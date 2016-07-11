@@ -15,13 +15,31 @@
  */
 package com.cuebiq.presto.scalar;
 
+import com.facebook.presto.metadata.Signature;
+import com.facebook.presto.metadata.SqlScalarFunction;
+import com.facebook.presto.metadata.SqlScalarFunctionBuilder;
 import com.facebook.presto.operator.Description;
 import com.facebook.presto.operator.scalar.ScalarFunction;
+import com.facebook.presto.operator.scalar.TypeParameter;
+import com.facebook.presto.spi.type.Decimals;
 import com.facebook.presto.spi.type.StandardTypes;
+import com.facebook.presto.spi.type.TypeSignature;
+import com.facebook.presto.type.DecimalOperators;
 import com.facebook.presto.type.SqlType;
 import com.github.davidmoten.geo.GeoHash;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import io.airlift.slice.Slice;
 import io.airlift.slice.Slices;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.List;
+
+import static com.facebook.presto.metadata.FunctionKind.SCALAR;
+import static com.facebook.presto.metadata.OperatorType.ADD;
+import static com.facebook.presto.metadata.Signature.longVariableExpression;
+import static com.facebook.presto.spi.type.TypeSignature.parseTypeSignature;
 
 /**
  * utility functions to be used when dealing with geographic positions.
@@ -47,6 +65,10 @@ public class GeographicFunctions {
         double c = 2.0D * Math.atan2(Math.sqrt(a), Math.sqrt(1.0D - a));
         return 6371000.0D * c;
     }
+
+
+
+
 
 
 
