@@ -18,13 +18,13 @@ package com.cuebiq.presto.scalar;
 import com.facebook.presto.metadata.Signature;
 import com.facebook.presto.metadata.SqlScalarFunction;
 import com.facebook.presto.metadata.SqlScalarFunctionBuilder;
-import com.facebook.presto.spi.function.Description;
-import com.facebook.presto.spi.function.ScalarFunction;
-import com.facebook.presto.spi.function.SqlType;
+import com.facebook.presto.operator.Description;
+import com.facebook.presto.operator.scalar.annotations.ScalarFunction;
 import com.facebook.presto.spi.type.Decimals;
 import com.facebook.presto.spi.type.StandardTypes;
 import com.facebook.presto.spi.type.TypeSignature;
 import com.facebook.presto.type.DecimalOperators;
+import com.facebook.presto.type.SqlType;
 import com.github.davidmoten.geo.GeoHash;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -36,6 +36,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 import static com.facebook.presto.metadata.FunctionKind.SCALAR;
+import static com.facebook.presto.metadata.OperatorType.ADD;
 import static com.facebook.presto.metadata.Signature.longVariableExpression;
 import static com.facebook.presto.spi.type.TypeSignature.parseTypeSignature;
 

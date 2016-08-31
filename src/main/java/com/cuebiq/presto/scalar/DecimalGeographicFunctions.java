@@ -1,10 +1,14 @@
 package com.cuebiq.presto.scalar;
 
+import com.facebook.presto.operator.Description;
 
-import com.facebook.presto.spi.function.*;
+import com.facebook.presto.operator.scalar.annotations.ScalarFunction;
+import com.facebook.presto.operator.scalar.annotations.TypeParameter;
+import com.facebook.presto.operator.scalar.annotations.TypeParameterContainer;
 import com.facebook.presto.spi.type.DecimalType;
 import com.facebook.presto.spi.type.Decimals;
 import com.facebook.presto.spi.type.StandardTypes;
+import com.facebook.presto.type.SqlType;
 import io.airlift.slice.Slice;
 
 import javax.annotation.Nullable;
@@ -15,7 +19,7 @@ import java.math.BigDecimal;
 public class DecimalGeographicFunctions {
 
     @SqlType(StandardTypes.VARCHAR)
-    @TypeParameters({@TypeParameter("decimal(lat_precision, lat_scale)")
+    @TypeParameterContainer({@TypeParameter("decimal(lat_precision, lat_scale)")
             , @TypeParameter("decimal(lng_precision, lng_scale)")}
     )
     @Nullable

@@ -15,21 +15,17 @@
  */
 package com.cuebiq.presto;
 
-
-import com.cuebiq.presto.scalar.DecimalGeographicFunctions;
-import com.cuebiq.presto.scalar.GeographicFunctions;
-import com.cuebiq.presto.scalar.HashingFunctions;
-import com.cuebiq.presto.scalar.PolyContains;
-import com.facebook.presto.spi.Plugin;
+import com.facebook.presto.metadata.FunctionFactory;
 import com.facebook.presto.spi.type.TypeManager;
+import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
 
-
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class CuebiqPlugin implements Plugin {
+public class CuebiqPlugin implements com.facebook.presto.spi.Plugin {
 
     private TypeManager typeManager;
 
@@ -45,11 +41,12 @@ public class CuebiqPlugin implements Plugin {
     }
 
     @Override
-    public Set<Class<?>> getFunctions() {
-        List<Class<?>> classes1 = Arrays.asList(
-                DecimalGeographicFunctions.class, PolyContains.class, HashingFunctions.class, GeographicFunctions.class);
-        return new HashSet<>(classes1);
+    public <T> List<T> getServices(Class<T> type) {
+        if (type == FunctionFactory.class) {
+            return ImmutableList.of(type.cast(new UdfFactory(typeManager)));
+        }
 
+        return ImmutableList.of();
     }
 
 }
