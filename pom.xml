@@ -22,6 +22,7 @@
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
+        <presto-version>0.152</presto-version>
     </properties>
 
 
@@ -29,13 +30,13 @@
         <dependency>
             <groupId>com.facebook.presto</groupId>
             <artifactId>presto-spi</artifactId>
-            <version>0.147</version>
+            <version>${presto-version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.facebook.presto</groupId>
             <artifactId>presto-main</artifactId>
-            <version>0.147</version>
+            <version>${presto-version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

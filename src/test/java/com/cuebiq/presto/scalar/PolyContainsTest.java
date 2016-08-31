@@ -32,7 +32,7 @@ public class PolyContainsTest {
     {
 
         TypeRegistry typeRegistry = new TypeRegistry();
-        FunctionListBuilder builder = new FunctionListBuilder(typeRegistry);
+        FunctionListBuilder builder = new FunctionListBuilder();
 
         builder.scalar(PolyContains.class);
     }
@@ -60,7 +60,7 @@ public class PolyContainsTest {
     private static Block toBlock(double[] poly) {
         FixedWidthBlockBuilder blockBuilder = new FixedWidthBlockBuilder(8, new BlockBuilderStatus(), poly.length);
         for (double d : poly) {
-            blockBuilder.writeDouble(d);
+            blockBuilder.writeLong(Double.doubleToLongBits(d));
             blockBuilder.closeEntry();
         }
         return blockBuilder.build();

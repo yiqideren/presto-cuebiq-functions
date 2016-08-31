@@ -18,13 +18,13 @@ package com.cuebiq.presto.scalar;
 import com.esri.core.geometry.OperatorContains;
 import com.esri.core.geometry.Point;
 import com.esri.core.geometry.Polygon;
-import com.facebook.presto.operator.Description;
-import com.facebook.presto.operator.scalar.ScalarFunction;
-import com.facebook.presto.operator.scalar.TypeParameter;
 import com.facebook.presto.spi.block.Block;
+import com.facebook.presto.spi.function.Description;
+import com.facebook.presto.spi.function.ScalarFunction;
+import com.facebook.presto.spi.function.SqlType;
+import com.facebook.presto.spi.function.TypeParameter;
 import com.facebook.presto.spi.type.StandardTypes;
 import com.facebook.presto.spi.type.Type;
-import com.facebook.presto.type.SqlType;
 
 import javax.annotation.Nullable;
 

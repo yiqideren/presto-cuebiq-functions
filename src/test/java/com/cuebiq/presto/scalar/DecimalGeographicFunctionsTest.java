@@ -18,7 +18,7 @@ public class DecimalGeographicFunctionsTest {
     {
 
         TypeRegistry typeRegistry = new TypeRegistry();
-        FunctionListBuilder builder = new FunctionListBuilder(typeRegistry);
+        FunctionListBuilder builder = new FunctionListBuilder();
 
         builder.scalar(DecimalGeographicFunctions.class);
     }
