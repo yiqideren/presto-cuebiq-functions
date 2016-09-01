@@ -24,17 +24,17 @@ public class GeographicFunctionsTest {
     @Test
     public void testHaversineZeroDistance()
     {
-        double haversine = GeographicFunctions.haversine(0, 0, 0, 0);
+        double haversine = Haversine.haversine(0, 0, 0, 0);
         Assert.assertEquals(0,haversine,Double.MIN_VALUE);
 
-        double haversine2 = GeographicFunctions.haversine(10, 20,10,20);
+        double haversine2 = Haversine.haversine(10, 20, 10, 20);
         Assert.assertEquals(0,haversine2,Double.MIN_VALUE);
     }
 
     @Test
     public void testHaversineStandardCase()
     {
-        double haversine2 = GeographicFunctions.haversine(13, 22,10,20);
+        double haversine2 = Haversine.haversine(13, 22, 10, 20);
         Assert.assertEquals(398444.295394513,haversine2,Double.MIN_VALUE);
     }
 
@@ -42,7 +42,7 @@ public class GeographicFunctionsTest {
     @Test
     public void testHaversineOverBoundaryParams()
     {
-        double haversine2 = GeographicFunctions.haversine(181, 20,181,21);
+        double haversine2 = Haversine.haversine(181, 20, 181, 21);
         Assert.assertEquals(111177.99068882648,haversine2,Double.MIN_VALUE);
     }
 

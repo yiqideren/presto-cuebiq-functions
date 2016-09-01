@@ -69,9 +69,6 @@ public class HashingFunctions {
 
     }
 
-
-
-
     /**
      * Swaps the two specified elements in the byte array.
      */
