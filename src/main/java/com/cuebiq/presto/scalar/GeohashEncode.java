@@ -15,36 +15,32 @@
  */
 package com.cuebiq.presto.scalar;
 
-
 import com.facebook.presto.operator.Description;
 import com.facebook.presto.operator.scalar.annotations.ScalarFunction;
 import com.facebook.presto.spi.type.StandardTypes;
 import com.facebook.presto.type.SqlType;
+import com.github.davidmoten.geo.GeoHash;
 import io.airlift.slice.Slice;
 import io.airlift.slice.Slices;
-import org.apache.commons.codec.digest.DigestUtils;
 
 /**
- * as of .147 version,
- * PrestoDB doesn't offer hashing functions returning String type result.
- * these methods are a substitution for those methods.
- * returned String uses UTF-8 charset.
+ * utility functions to be used when dealing with geographic positions.
+ * convention is lat first.
+ * Created by emanuelesan on 15/06/16.
  */
-public class HashingFunctions {
+@ScalarFunction("geohash_encode")
+@Description("geoHash. params: lat,lng, precision")
+public class GeohashEncode {
 
-    private HashingFunctions() {
-    }
-
-
-
-    @Description("hashes with md5")
-    @ScalarFunction
     @SqlType(StandardTypes.VARCHAR)
-    public static Slice md_5(@SqlType(StandardTypes.VARCHAR) Slice string) {
-
-        return Slices.utf8Slice(DigestUtils.md5Hex(string.toStringUtf8()));
-
+    public static Slice geohash_encode(@SqlType(StandardTypes.DOUBLE) double lat, @SqlType(StandardTypes.DOUBLE) double lng, @SqlType(StandardTypes.INTEGER) long precision) {
+        return Slices.utf8Slice(GeoHash.encodeHash(lat, lng, (int) precision));
     }
+
+
+
+
+
 
 
 

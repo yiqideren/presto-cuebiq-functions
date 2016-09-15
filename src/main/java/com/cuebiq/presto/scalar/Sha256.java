@@ -19,29 +19,18 @@ import com.facebook.presto.operator.Description;
 import com.facebook.presto.operator.scalar.annotations.ScalarFunction;
 import com.facebook.presto.spi.type.StandardTypes;
 import com.facebook.presto.type.SqlType;
-import com.github.davidmoten.geo.GeoHash;
 import io.airlift.slice.Slice;
 import io.airlift.slice.Slices;
+import org.apache.commons.codec.digest.DigestUtils;
 
-/**
- * utility functions to be used when dealing with geographic positions.
- * convention is lat first.
- * Created by emanuelesan on 15/06/16.
- */
-public class GeographicFunctions {
+@Description("hashes with sha_256")
+@ScalarFunction("sha_256")
+public class Sha256 {
 
-    @Description("geoHash. params: lat,lng, precision")
-    @ScalarFunction
+
     @SqlType(StandardTypes.VARCHAR)
-    public static Slice geohash_encode(@SqlType(StandardTypes.DOUBLE) double lat, @SqlType(StandardTypes.DOUBLE) double lng, @SqlType(StandardTypes.INTEGER) long precision) {
-        return Slices.utf8Slice(GeoHash.encodeHash(lat, lng, (int) precision));
+    public static Slice sha_256(@SqlType(StandardTypes.VARCHAR) Slice string) {
+        return Slices.utf8Slice(DigestUtils.sha256Hex(string.toStringUtf8()));
+
     }
-
-
-
-
-
-
-
-
 }

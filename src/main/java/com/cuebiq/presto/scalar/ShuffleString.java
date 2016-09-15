@@ -15,37 +15,38 @@
  */
 package com.cuebiq.presto.scalar;
 
-
 import com.facebook.presto.operator.Description;
 import com.facebook.presto.operator.scalar.annotations.ScalarFunction;
 import com.facebook.presto.spi.type.StandardTypes;
 import com.facebook.presto.type.SqlType;
 import io.airlift.slice.Slice;
 import io.airlift.slice.Slices;
-import org.apache.commons.codec.digest.DigestUtils;
 
-/**
- * as of .147 version,
- * PrestoDB doesn't offer hashing functions returning String type result.
- * these methods are a substitution for those methods.
- * returned String uses UTF-8 charset.
- */
-public class HashingFunctions {
+import java.util.Random;
 
-    private HashingFunctions() {
-    }
+@ScalarFunction("shuffle_string")
+@Description("shuffles using a pseudo random algorithm.")
+public class ShuffleString {
 
-
-
-    @Description("hashes with md5")
-    @ScalarFunction
     @SqlType(StandardTypes.VARCHAR)
-    public static Slice md_5(@SqlType(StandardTypes.VARCHAR) Slice string) {
-
-        return Slices.utf8Slice(DigestUtils.md5Hex(string.toStringUtf8()));
+    public static Slice shuffle_string(@SqlType(StandardTypes.VARCHAR) Slice string) {
+        String id = string.toStringUtf8();
+        Random rnd = new Random(id.charAt(0));
+        byte[] bytes = id.getBytes();
+        for (int i = bytes.length; i > 1; i--) {
+            swap(bytes, i - 1, rnd.nextInt(i));
+        }
+        return Slices.wrappedBuffer(bytes);
 
     }
 
-
+    /**
+     * Swaps the two specified elements in the byte array.
+     */
+    private static void swap(byte[] arr, int i, int j) {
+        byte tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+    }
 
 }

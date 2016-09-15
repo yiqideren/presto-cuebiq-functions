@@ -18,7 +18,7 @@ package com.cuebiq.presto.scalar;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class GeographicFunctionsTest {
+public class GeohashEncodeTest {
 
 
     @Test
