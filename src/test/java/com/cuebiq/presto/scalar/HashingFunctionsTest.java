@@ -27,7 +27,7 @@ public class HashingFunctionsTest {
     public void sha_256()
     {
 
-        Slice hashedString = HashingFunctions.sha_256(Slices.utf8Slice("test"));
+        Slice hashedString = Sha256.sha_256(Slices.utf8Slice("test"));
         Assert.assertEquals("9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",hashedString.toStringUtf8());
     }
 
@@ -42,7 +42,7 @@ public class HashingFunctionsTest {
     @Test
     public void shuffle_string()
     {
-        Slice shuffledString =HashingFunctions.shuffle_string(Slices.utf8Slice("test"));
+        Slice shuffledString = ShuffleString.shuffle_string(Slices.utf8Slice("test"));
         Assert.assertEquals("ttes",shuffledString.toStringUtf8());
 
     }
