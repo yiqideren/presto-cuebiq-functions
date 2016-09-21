@@ -25,6 +25,12 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 @Description("hashes with sha_256")
 @ScalarFunction("sha_256")
+/**
+ * as of .147 version,
+ * PrestoDB doesn't offer hashing functions returning String type result.
+ * these methods are a substitution for those methods.
+ * returned String uses UTF-8 charset.
+ */
 public class Sha256 {
 
 

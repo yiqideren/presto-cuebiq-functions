@@ -30,18 +30,15 @@ import org.apache.commons.codec.digest.DigestUtils;
  * these methods are a substitution for those methods.
  * returned String uses UTF-8 charset.
  */
-public class HashingFunctions {
+@Description("hashes with md5")
+@ScalarFunction("md_5")
+public class Md5 {
 
-    private HashingFunctions() {
+    private Md5() {
     }
 
-
-
-    @Description("hashes with md5")
-    @ScalarFunction
     @SqlType(StandardTypes.VARCHAR)
     public static Slice md_5(@SqlType(StandardTypes.VARCHAR) Slice string) {
-
         return Slices.utf8Slice(DigestUtils.md5Hex(string.toStringUtf8()));
 
     }
