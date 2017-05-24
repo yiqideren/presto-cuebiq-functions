@@ -19,6 +19,7 @@ public class DecimalGeographicFunctions {
             , @TypeParameter("decimal(lng_precision, lng_scale)")}
     )
     @Nullable
+    @SqlNullable
     public static Slice geohash_encode_decimal(
             @TypeParameter("decimal(lat_precision, lat_scale)") DecimalType latParameter,
             @TypeParameter("decimal(lng_precision, lng_scale)") DecimalType lngParameter,

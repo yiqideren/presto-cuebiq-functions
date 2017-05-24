@@ -33,11 +33,6 @@ public class CuebiqPlugin implements Plugin {
 
     private TypeManager typeManager;
 
-    @Override
-    public void setOptionalConfig(Map<String, String> optionalConfig) {
-
-    }
-
     @Inject
     @SuppressWarnings("unused")
     public void setTypeManager(TypeManager typeManager) {

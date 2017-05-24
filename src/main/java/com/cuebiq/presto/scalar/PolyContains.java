@@ -19,10 +19,7 @@ import com.esri.core.geometry.OperatorContains;
 import com.esri.core.geometry.Point;
 import com.esri.core.geometry.Polygon;
 import com.facebook.presto.spi.block.Block;
-import com.facebook.presto.spi.function.Description;
-import com.facebook.presto.spi.function.ScalarFunction;
-import com.facebook.presto.spi.function.SqlType;
-import com.facebook.presto.spi.function.TypeParameter;
+import com.facebook.presto.spi.function.*;
 import com.facebook.presto.spi.type.StandardTypes;
 import com.facebook.presto.spi.type.Type;
 
@@ -39,6 +36,7 @@ public class PolyContains {
     @TypeParameter(StandardTypes.DOUBLE)
     @SqlType(StandardTypes.BOOLEAN)
     @Nullable
+    @SqlNullable
     public static Boolean contains(
             @TypeParameter(StandardTypes.DOUBLE) Type elementType,
             @SqlType("array(double)") Block arrayBlock,
