@@ -15,7 +15,10 @@
  */
 package com.cuebiq.presto.scalar;
 
+import com.facebook.presto.spi.block.Block;
+import com.facebook.presto.spi.type.DoubleType;
 import io.airlift.slice.Slice;
+import io.airlift.slice.Slices;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -47,14 +50,13 @@ public class GeographicFunctionsTest {
 
         Slice geohash = GeographicFunctions.geohash_encode(45.0, 9.0, 9);
         Assert.assertEquals("u0n2hb185", geohash.toStringUtf8());
-        int bla = 0;
     }
 
     @Test
     public void testGeoHashDecode() {
 
-        double[] coordinates = GeographicFunctions.geohash_decode("u0n2hb185");
-        Assert.assertEquals(45.00002145767212, coordinates[0], Double.MIN_VALUE);
-        Assert.assertEquals(9.000012874603271, coordinates[1], Double.MIN_VALUE);
+        Block coordinates = GeographicFunctions.geohash_decode(Slices.utf8Slice("u0n2hb185"));
+        Assert.assertEquals(45.00002145767212, DoubleType.DOUBLE.getDouble(coordinates,0), Double.MIN_VALUE);
+        Assert.assertEquals(9.000012874603271, DoubleType.DOUBLE.getDouble(coordinates,1), Double.MIN_VALUE);
     }
 }

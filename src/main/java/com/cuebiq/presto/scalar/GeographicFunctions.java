@@ -15,30 +15,19 @@
  */
 package com.cuebiq.presto.scalar;
 
-import com.facebook.presto.metadata.Signature;
-import com.facebook.presto.metadata.SqlScalarFunction;
-import com.facebook.presto.metadata.SqlScalarFunctionBuilder;
+import com.facebook.presto.spi.block.Block;
+import com.facebook.presto.spi.block.BlockBuilder;
+import com.facebook.presto.spi.block.BlockBuilderStatus;
 import com.facebook.presto.spi.function.Description;
 import com.facebook.presto.spi.function.ScalarFunction;
 import com.facebook.presto.spi.function.SqlType;
-import com.facebook.presto.spi.type.Decimals;
 import com.facebook.presto.spi.type.StandardTypes;
-import com.facebook.presto.spi.type.TypeSignature;
-import com.facebook.presto.type.DecimalOperators;
 import com.github.davidmoten.geo.GeoHash;
 import com.github.davidmoten.geo.LatLong;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
 import io.airlift.slice.Slice;
 import io.airlift.slice.Slices;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.List;
-
-import static com.facebook.presto.metadata.FunctionKind.SCALAR;
-import static com.facebook.presto.metadata.Signature.longVariableExpression;
-import static com.facebook.presto.spi.type.TypeSignature.parseTypeSignature;
+import static com.facebook.presto.spi.type.DoubleType.DOUBLE;
 
 /**
  * utility functions to be used when dealing with geographic positions.
@@ -56,10 +45,14 @@ public class GeographicFunctions {
 
     @Description("geoHash. params: geohash")
     @ScalarFunction
-    @SqlType(StandardTypes.ARRAY)
-    public static double[] geohash_decode(@SqlType(StandardTypes.VARCHAR) String geohash) {
-        LatLong coordinates = GeoHash.decodeHash(geohash);
-        return new double[]{coordinates.getLat(), coordinates.getLon()};
+    @SqlType("array(double)")
+    public static Block geohash_decode(@SqlType(StandardTypes.VARCHAR) Slice geohash)
+    {
+        BlockBuilder blockBuilder = DOUBLE.createBlockBuilder(new BlockBuilderStatus(), 2);
+        LatLong coordinates = GeoHash.decodeHash(geohash.toStringUtf8());
+        DOUBLE.writeDouble(blockBuilder, coordinates.getLat());
+        DOUBLE.writeDouble(blockBuilder, coordinates.getLon());
+        return blockBuilder.build();
     }
 
     @Description("haversine distance. params: lat1, lng1, lat2, lng2")
