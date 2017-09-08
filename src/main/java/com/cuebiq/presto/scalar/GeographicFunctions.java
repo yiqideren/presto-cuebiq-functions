@@ -26,6 +26,7 @@ import com.facebook.presto.spi.type.StandardTypes;
 import com.facebook.presto.spi.type.TypeSignature;
 import com.facebook.presto.type.DecimalOperators;
 import com.github.davidmoten.geo.GeoHash;
+import com.github.davidmoten.geo.LatLong;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import io.airlift.slice.Slice;
@@ -53,6 +54,14 @@ public class GeographicFunctions {
         return Slices.utf8Slice(GeoHash.encodeHash(lat, lng, (int) precision));
     }
 
+    @Description("geoHash. params: geohash")
+    @ScalarFunction
+    @SqlType(StandardTypes.ARRAY)
+    public static double[] geohash_decode(@SqlType(StandardTypes.VARCHAR) String geohash) {
+        LatLong coordinates = GeoHash.decodeHash(geohash);
+        return new double[]{coordinates.getLat(), coordinates.getLon()};
+    }
+
     @Description("haversine distance. params: lat1, lng1, lat2, lng2")
     @ScalarFunction
     @SqlType(StandardTypes.DOUBLE)
@@ -63,11 +72,4 @@ public class GeographicFunctions {
         double c = 2.0D * Math.atan2(Math.sqrt(a), Math.sqrt(1.0D - a));
         return 6371000.0D * c;
     }
-
-
-
-
-
-
-
 }
