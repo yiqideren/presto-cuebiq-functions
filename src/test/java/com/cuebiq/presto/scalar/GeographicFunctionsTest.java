@@ -15,37 +15,46 @@
  */
 package com.cuebiq.presto.scalar;
 
+import io.airlift.slice.Slice;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class GeographicFunctionsTest {
 
-
     @Test
-    public void testHaversineZeroDistance()
-    {
+    public void testHaversineZeroDistance() {
         double haversine = GeographicFunctions.haversine(0, 0, 0, 0);
-        Assert.assertEquals(0,haversine,Double.MIN_VALUE);
+        Assert.assertEquals(0, haversine, Double.MIN_VALUE);
 
-        double haversine2 = GeographicFunctions.haversine(10, 20,10,20);
-        Assert.assertEquals(0,haversine2,Double.MIN_VALUE);
+        double haversine2 = GeographicFunctions.haversine(10, 20, 10, 20);
+        Assert.assertEquals(0, haversine2, Double.MIN_VALUE);
     }
 
     @Test
-    public void testHaversineStandardCase()
-    {
-        double haversine2 = GeographicFunctions.haversine(13, 22,10,20);
-        Assert.assertEquals(398444.295394513,haversine2,Double.MIN_VALUE);
+    public void testHaversineStandardCase() {
+        double haversine2 = GeographicFunctions.haversine(13, 22, 10, 20);
+        Assert.assertEquals(398444.295394513, haversine2, Double.MIN_VALUE);
     }
-
 
     @Test
-    public void testHaversineOverBoundaryParams()
-    {
-        double haversine2 = GeographicFunctions.haversine(181, 20,181,21);
-        Assert.assertEquals(111177.99068882648,haversine2,Double.MIN_VALUE);
+    public void testHaversineOverBoundaryParams() {
+        double haversine2 = GeographicFunctions.haversine(181, 20, 181, 21);
+        Assert.assertEquals(111177.99068882648, haversine2, Double.MIN_VALUE);
     }
 
+    @Test
+    public void testGeoHashEncode() {
 
+        Slice geohash = GeographicFunctions.geohash_encode(45.0, 9.0, 9);
+        Assert.assertEquals("u0n2hb185", geohash.toStringUtf8());
+        int bla = 0;
+    }
 
+    @Test
+    public void testGeoHashDecode() {
+
+        double[] coordinates = GeographicFunctions.geohash_decode("u0n2hb185");
+        Assert.assertEquals(45.00002145767212, coordinates[0], Double.MIN_VALUE);
+        Assert.assertEquals(9.000012874603271, coordinates[1], Double.MIN_VALUE);
+    }
 }
