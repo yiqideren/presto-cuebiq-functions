@@ -4,14 +4,10 @@ import com.facebook.presto.metadata.FunctionListBuilder;
 import com.facebook.presto.type.TypeRegistry;
 import org.junit.Test;
 
-import java.util.Collections;
-
-import static org.junit.Assert.*;
-
 /**
  * Created by emanuelesan on 17/06/16.
  */
-public class DecimalGeographicFunctionsTest {
+public class DecimalGeohashEncodeTest {
 
     @Test
     public void testFunctionCreation()
