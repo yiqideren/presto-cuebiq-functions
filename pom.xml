@@ -64,7 +64,7 @@
     </dependencies>
 
     <build>
-        <finalName>prest_plugins_${presto-version}</finalName>
+        <finalName>presto_plugins_${presto-version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
