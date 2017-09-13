@@ -46,13 +46,26 @@ public class GeographicFunctions {
     @Description("geoHash. params: geohash")
     @ScalarFunction
     @SqlType("array(double)")
-    public static Block geohash_decode(@SqlType(StandardTypes.VARCHAR) Slice geohash)
-    {
+    public static Block geohash_decode(@SqlType(StandardTypes.VARCHAR) Slice geohash) {
         BlockBuilder blockBuilder = DOUBLE.createBlockBuilder(new BlockBuilderStatus(), 2);
         LatLong coordinates = GeoHash.decodeHash(geohash.toStringUtf8());
         DOUBLE.writeDouble(blockBuilder, coordinates.getLat());
         DOUBLE.writeDouble(blockBuilder, coordinates.getLon());
         return blockBuilder.build();
+    }
+
+    @Description("geoHash. params: geohash")
+    @ScalarFunction
+    @SqlType(StandardTypes.DOUBLE)
+    public static double geohash_decode_lat(@SqlType(StandardTypes.VARCHAR) Slice geohash) {
+        return GeoHash.decodeHash(geohash.toStringUtf8()).getLat();
+    }
+
+    @Description("geoHash. params: geohash")
+    @ScalarFunction
+    @SqlType(StandardTypes.DOUBLE)
+    public static double geohash_decode_lng(@SqlType(StandardTypes.VARCHAR) Slice geohash) {
+        return GeoHash.decodeHash(geohash.toStringUtf8()).getLon();
     }
 
     @Description("haversine distance. params: lat1, lng1, lat2, lng2")
