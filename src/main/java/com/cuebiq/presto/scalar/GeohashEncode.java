@@ -36,12 +36,4 @@ public class GeohashEncode {
     public static Slice geohash_encode(@SqlType(StandardTypes.DOUBLE) double lat, @SqlType(StandardTypes.DOUBLE) double lng, @SqlType(StandardTypes.INTEGER) long precision) {
         return Slices.utf8Slice(GeoHash.encodeHash(lat, lng, (int) precision));
     }
-
-
-
-
-
-
-
-
 }

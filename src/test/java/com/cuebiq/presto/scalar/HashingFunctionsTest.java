@@ -22,28 +22,23 @@ import org.junit.Test;
 
 public class HashingFunctionsTest {
 
-
     @Test
-    public void sha_256()
-    {
+    public void sha_256() {
 
         Slice hashedString = Sha256.sha_256(Slices.utf8Slice("test"));
-        Assert.assertEquals("9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",hashedString.toStringUtf8());
-    }
-
-
-    @Test
-    public void md_5()
-    {
-        Slice hashedString = HashingFunctions.md_5(Slices.utf8Slice("test"));
-        Assert.assertEquals("098f6bcd4621d373cade4e832627b4f6",hashedString.toStringUtf8());
+        Assert.assertEquals("9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08", hashedString.toStringUtf8());
     }
 
     @Test
-    public void shuffle_string()
-    {
+    public void md_5() {
+        Slice hashedString = Md5.md_5(Slices.utf8Slice("test"));
+        Assert.assertEquals("098f6bcd4621d373cade4e832627b4f6", hashedString.toStringUtf8());
+    }
+
+    @Test
+    public void shuffle_string() {
         Slice shuffledString = ShuffleString.shuffle_string(Slices.utf8Slice("test"));
-        Assert.assertEquals("ttes",shuffledString.toStringUtf8());
+        Assert.assertEquals("ttes", shuffledString.toStringUtf8());
 
     }
 }
