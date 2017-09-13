@@ -15,10 +15,6 @@
  */
 package com.cuebiq.presto.scalar;
 
-import com.facebook.presto.spi.block.Block;
-import com.facebook.presto.spi.type.DoubleType;
-import io.airlift.slice.Slice;
-import io.airlift.slice.Slices;
 import org.junit.Assert;
 import org.junit.Test;
 
