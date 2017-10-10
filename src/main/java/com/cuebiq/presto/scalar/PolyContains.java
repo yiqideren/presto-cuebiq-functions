@@ -19,9 +19,11 @@ import com.esri.core.geometry.OperatorContains;
 import com.esri.core.geometry.Point;
 import com.esri.core.geometry.Polygon;
 import com.facebook.presto.spi.block.Block;
-import com.facebook.presto.spi.function.*;
+import com.facebook.presto.spi.function.Description;
+import com.facebook.presto.spi.function.ScalarFunction;
+import com.facebook.presto.spi.function.SqlNullable;
+import com.facebook.presto.spi.function.SqlType;
 import com.facebook.presto.spi.type.StandardTypes;
-import com.facebook.presto.spi.type.Type;
 
 import javax.annotation.Nullable;
 
@@ -33,17 +35,14 @@ import javax.annotation.Nullable;
 @ScalarFunction("poly_contains")
 public class PolyContains {
 
-    @TypeParameter(StandardTypes.DOUBLE)
     @SqlType(StandardTypes.BOOLEAN)
     @Nullable
     @SqlNullable
     public static Boolean contains(
-            @TypeParameter(StandardTypes.DOUBLE) Type elementType,
             @SqlType("array(double)") Block arrayBlock,
             @SqlType(StandardTypes.DOUBLE) double lng,
-            @SqlType(StandardTypes.DOUBLE) double lat)
-    {
-        double[] array= new double[arrayBlock.getPositionCount()] ;
+            @SqlType(StandardTypes.DOUBLE) double lat) {
+        double[] array = new double[arrayBlock.getPositionCount()];
         Polygon poly = new Polygon();
 
         for (int i = 0; i < arrayBlock.getPositionCount(); i++) {
@@ -51,15 +50,14 @@ public class PolyContains {
             if (arrayBlock.isNull(i)) {
                 continue;
             }
-            array[i]=elementType.getDouble(arrayBlock, i);
-
+            array[i] = arrayBlock.getSlice(i, 0, arrayBlock.getSliceLength(i)).getDouble(0);
         }
 
         poly.startPath(array[0], array[1]);
         for (int i = 2; i < array.length; i += 2) {
             poly.lineTo(array[i], array[i + 1]);
         }
-        return OperatorContains.local().execute(poly, new Point(lng,lat), null, null);
+        return OperatorContains.local().execute(poly, new Point(lng, lat), null, null);
     }
 
 }

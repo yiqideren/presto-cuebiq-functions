@@ -16,7 +16,6 @@
 package com.cuebiq.presto;
 
 
-import com.cuebiq.presto.scalar.DecimalGeographicFunctions;
 import com.cuebiq.presto.scalar.GeographicFunctions;
 import com.cuebiq.presto.scalar.HashingFunctions;
 import com.cuebiq.presto.scalar.PolyContains;
@@ -42,7 +41,10 @@ public class CuebiqPlugin implements Plugin {
     @Override
     public Set<Class<?>> getFunctions() {
         List<Class<?>> classes1 = Arrays.asList(
-                DecimalGeographicFunctions.class, PolyContains.class, HashingFunctions.class, GeographicFunctions.class);
+                PolyContains.class,
+                HashingFunctions.class,
+                GeographicFunctions.class
+        );
         return new HashSet<>(classes1);
 
     }

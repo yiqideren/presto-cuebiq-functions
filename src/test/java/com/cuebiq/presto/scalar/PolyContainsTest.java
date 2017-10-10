@@ -51,9 +51,9 @@ public class PolyContainsTest {
         };
 
         Block blockPoly = toBlock(poly);
-        assertFalse(PolyContains.contains(DoubleType.DOUBLE, blockPoly, 6, 3));
-        assertFalse(PolyContains.contains(DoubleType.DOUBLE, blockPoly, 45, 9));
-        assertTrue(PolyContains.contains(DoubleType.DOUBLE, blockPoly, 45.7, 9.7));
+        assertFalse(PolyContains.contains(blockPoly, 6, 3));
+        assertFalse(PolyContains.contains(blockPoly, 45, 9));
+        assertTrue(PolyContains.contains(blockPoly, 45.7, 9.7));
 
     }
 
