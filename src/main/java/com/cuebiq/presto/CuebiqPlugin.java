@@ -46,7 +46,5 @@ public class CuebiqPlugin implements Plugin {
                 GeographicFunctions.class
         );
         return new HashSet<>(classes1);
-
     }
-
 }
