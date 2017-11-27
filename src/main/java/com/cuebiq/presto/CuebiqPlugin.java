@@ -46,5 +46,4 @@ public class CuebiqPlugin implements Plugin {
         return new HashSet<>(classes1);
 
     }
-
 }
