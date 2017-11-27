@@ -49,7 +49,5 @@ public class CuebiqPlugin implements Plugin {
         List<Class<?>> classes1 = Arrays.asList(
                 DecimalGeographicFunctions.class, PolyContains.class, HashingFunctions.class, GeographicFunctions.class);
         return new HashSet<>(classes1);
-
     }
-
 }
