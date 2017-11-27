@@ -16,6 +16,7 @@
 package com.cuebiq.presto;
 
 
+import com.cuebiq.presto.scalar.DatesFunctions;
 import com.cuebiq.presto.scalar.GeographicFunctions;
 import com.cuebiq.presto.scalar.HashingFunctions;
 import com.cuebiq.presto.scalar.PolyContains;
@@ -43,7 +44,8 @@ public class CuebiqPlugin implements Plugin {
         List<Class<?>> classes1 = Arrays.asList(
                 PolyContains.class,
                 HashingFunctions.class,
-                GeographicFunctions.class
+                GeographicFunctions.class,
+                DatesFunctions.class
         );
         return new HashSet<>(classes1);
 
