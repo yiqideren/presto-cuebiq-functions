@@ -33,4 +33,4 @@ Functions
  * haversine(DOUBLE lat1,DOUBLE lng1,DOUBLE lat2,DOUBLE lng2) -> DOUBLE
  * to_cuebiq_week_format(VARCHAR date, VARCHAR dateFormat) -> VARCHAR\
   example: select to_cuebiq_week_format('20160101','yyyyMMdd');
-
+ 
