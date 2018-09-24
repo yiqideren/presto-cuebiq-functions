@@ -23,9 +23,8 @@ import com.facebook.presto.spi.function.Description;
 import com.facebook.presto.spi.function.ScalarFunction;
 import com.facebook.presto.spi.function.SqlNullable;
 import com.facebook.presto.spi.function.SqlType;
+import com.facebook.presto.spi.type.DoubleType;
 import com.facebook.presto.spi.type.StandardTypes;
-
-import javax.annotation.Nullable;
 
 /**
  * as the description states,
@@ -36,7 +35,6 @@ import javax.annotation.Nullable;
 public class PolyContains {
 
     @SqlType(StandardTypes.BOOLEAN)
-    @Nullable
     @SqlNullable
     public static Boolean contains(
             @SqlType("array(double)") Block arrayBlock,
@@ -50,7 +48,7 @@ public class PolyContains {
             if (arrayBlock.isNull(i)) {
                 continue;
             }
-            array[i] = arrayBlock.getSlice(i, 0, arrayBlock.getSliceLength(i)).getDouble(0);
+            array[i] = DoubleType.DOUBLE.getDouble(arrayBlock, i);
         }
 
         poly.startPath(array[0], array[1]);

@@ -16,10 +16,9 @@
 package com.cuebiq.presto.scalar;
 
 import com.facebook.presto.metadata.FunctionListBuilder;
-import com.facebook.presto.spi.block.Block;
 import com.facebook.presto.spi.block.BlockBuilderStatus;
-import com.facebook.presto.spi.block.FixedWidthBlockBuilder;
-import com.facebook.presto.spi.type.DoubleType;
+import com.facebook.presto.spi.block.LongArrayBlock;
+import com.facebook.presto.spi.block.LongArrayBlockBuilder;
 import com.facebook.presto.type.TypeRegistry;
 import org.junit.Test;
 
@@ -28,8 +27,7 @@ import static org.junit.Assert.assertTrue;
 
 public class PolyContainsTest {
     @Test
-    public void testFunctionCreation()
-    {
+    public void testFunctionCreation() {
 
         TypeRegistry typeRegistry = new TypeRegistry();
         FunctionListBuilder builder = new FunctionListBuilder();
@@ -40,7 +38,6 @@ public class PolyContainsTest {
     @Test
     public void testPoly_contains() throws Exception {
 
-
         double[] poly = new double[]{
                 45, 9.5,
                 45.5, 9.5,
@@ -50,21 +47,20 @@ public class PolyContainsTest {
                 45, 10
         };
 
-        Block blockPoly = toBlock(poly);
+        LongArrayBlock blockPoly = toBlock(poly);
         assertFalse(PolyContains.contains(blockPoly, 6, 3));
         assertFalse(PolyContains.contains(blockPoly, 45, 9));
         assertTrue(PolyContains.contains(blockPoly, 45.7, 9.7));
 
     }
 
-    private static Block toBlock(double[] poly) {
-        FixedWidthBlockBuilder blockBuilder = new FixedWidthBlockBuilder(8, new BlockBuilderStatus(), poly.length);
+    private static LongArrayBlock toBlock(double[] poly) {
+
+        LongArrayBlockBuilder blockBuilder = new LongArrayBlockBuilder(new BlockBuilderStatus(), poly.length);
         for (double d : poly) {
             blockBuilder.writeLong(Double.doubleToLongBits(d));
             blockBuilder.closeEntry();
         }
-        return blockBuilder.build();
+        return ((LongArrayBlock) blockBuilder.build());
     }
-
-
 }
