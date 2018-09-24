@@ -18,6 +18,7 @@ package com.cuebiq.presto.scalar;
 import com.facebook.presto.spi.block.Block;
 import com.facebook.presto.spi.block.BlockBuilder;
 import com.facebook.presto.spi.block.BlockBuilderStatus;
+import com.facebook.presto.spi.block.PageBuilderStatus;
 import com.facebook.presto.spi.function.Description;
 import com.facebook.presto.spi.function.ScalarFunction;
 import com.facebook.presto.spi.function.SqlType;
@@ -47,7 +48,7 @@ public class GeographicFunctions {
     @ScalarFunction
     @SqlType("array(double)")
     public static Block geohash_decode(@SqlType(StandardTypes.VARCHAR) Slice geohash) {
-        BlockBuilder blockBuilder = DOUBLE.createBlockBuilder(new BlockBuilderStatus(), 2);
+        BlockBuilder blockBuilder = DOUBLE.createBlockBuilder(new PageBuilderStatus().createBlockBuilderStatus(), 2);
         LatLong coordinates = GeoHash.decodeHash(geohash.toStringUtf8());
         DOUBLE.writeDouble(blockBuilder, coordinates.getLat());
         DOUBLE.writeDouble(blockBuilder, coordinates.getLon());

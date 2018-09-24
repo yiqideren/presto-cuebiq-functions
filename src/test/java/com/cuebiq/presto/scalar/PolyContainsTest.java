@@ -16,9 +16,9 @@
 package com.cuebiq.presto.scalar;
 
 import com.facebook.presto.metadata.FunctionListBuilder;
-import com.facebook.presto.spi.block.BlockBuilderStatus;
 import com.facebook.presto.spi.block.LongArrayBlock;
 import com.facebook.presto.spi.block.LongArrayBlockBuilder;
+import com.facebook.presto.spi.block.PageBuilderStatus;
 import com.facebook.presto.type.TypeRegistry;
 import org.junit.Test;
 
@@ -56,7 +56,7 @@ public class PolyContainsTest {
 
     private static LongArrayBlock toBlock(double[] poly) {
 
-        LongArrayBlockBuilder blockBuilder = new LongArrayBlockBuilder(new BlockBuilderStatus(), poly.length);
+        LongArrayBlockBuilder blockBuilder = new LongArrayBlockBuilder(new PageBuilderStatus().createBlockBuilderStatus(), poly.length);
         for (double d : poly) {
             blockBuilder.writeLong(Double.doubleToLongBits(d));
             blockBuilder.closeEntry();
